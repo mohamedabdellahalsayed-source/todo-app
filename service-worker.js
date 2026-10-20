@@ -1,5 +1,6 @@
 'use strict';
-const CACHE = 'mo7amed-todo-v2';
+// عند تعديل أي ملف في المشروع، غيّر رقم النسخة ليتحدث الكاش عند المستخدمين
+const CACHE = 'mo7amed-todo-v4';
 const FILES = ['./', './index.html', './style.css', './main.js', './manifest.json',
   './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 

@@ -1,140 +1,126 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" data-theme="dark">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1b1250">
-    <link rel="icon" href="icon-192.png">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    <title>Mo7amed To-Do</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mo7amed To-Do</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1b1250">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span
-            class="blob b3"></span></div>
-    <canvas id="confetti" aria-hidden="true"></canvas>
+<div class="bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
 
-    <main class="app">
-        <header class="top glass">
-            <div>
-                <h1 id="greeting">أهلًا بك</h1>
-                <p id="dateLine" class="muted"></p>
-            </div>
-            <button id="themeBtn" class="icon-btn" type="button" aria-label="تبديل الوضع الداكن والفاتح"></button>
-        </header>
+<main class="app">
+  <header class="top glass">
+    <div>
+      <h1 id="greeting">أهلًا بك</h1>
+      <p id="dateLine" class="muted"></p>
+    </div>
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="تبديل الوضع الداكن والفاتح"></button>
+  </header>
 
-        <section class="stats glass" aria-label="إحصائيات الإنجاز">
-            <div class="nums">
-                <div class="stat"><b id="sTotal">0</b><span>إجمالي المهام</span></div>
-                <div class="stat"><b id="sDone">0</b><span>مكتملة</span></div>
-                <div class="stat"><b id="sLeft">0</b><span>متبقية</span></div>
-                <div class="stat"><b id="sPct">0%</b><span>نسبة الإنجاز</span></div>
-            </div>
-            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
-                id="progress"><i id="bar"></i></div>
-            <p id="motivation" class="motivation"></p>
-        </section>
+  <section class="stats glass" aria-label="إحصائيات الإنجاز">
+    <div class="nums">
+      <div class="stat"><b id="sTotal">0</b><span>إجمالي المهام</span></div>
+      <div class="stat"><b id="sDone">0</b><span>مكتملة</span></div>
+      <div class="stat"><b id="sLeft">0</b><span>متبقية</span></div>
+      <div class="stat"><b id="sPct">0%</b><span>نسبة الإنجاز</span></div>
+    </div>
+    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress"><i id="bar"></i></div>
+    <p id="motivation" class="motivation"></p>
+  </section>
 
-        <form id="taskForm" class="glass form" novalidate>
-            <div class="row">
-                <input id="title" type="text" maxlength="120" autocomplete="off" placeholder="ماذا تريد أن تنجز اليوم؟"
-                    aria-label="عنوان المهمة">
-                <button id="submitBtn" class="btn primary" type="submit">إضافة مهمة</button>
-            </div>
-            <textarea id="desc" rows="2" maxlength="400" placeholder="وصف اختياري (Ctrl + Enter للحفظ)"
-                aria-label="وصف المهمة"></textarea>
-            <div class="grid">
-                <label>الأولوية
-                    <select id="priority">
-                        <option value="high">عالية</option>
-                        <option value="medium" selected>متوسطة</option>
-                        <option value="low">منخفضة</option>
-                    </select>
-                </label>
-                <label>الفئة <select id="category"></select></label>
-                <label>موعد الانتهاء <input id="deadline" type="datetime-local"></label>
-            </div>
-            <button id="cancelEdit" class="btn ghost" type="button" hidden>إلغاء التعديل</button>
-        </form>
+  <form id="taskForm" class="glass form" novalidate>
+    <div class="row">
+      <input id="title" type="text" maxlength="120" autocomplete="off" placeholder="ماذا تريد أن تنجز اليوم؟" aria-label="عنوان المهمة">
+      <button id="submitBtn" class="btn primary" type="submit">إضافة مهمة</button>
+    </div>
+    <textarea id="desc" rows="2" maxlength="400" placeholder="وصف اختياري (Ctrl + Enter للحفظ)" aria-label="وصف المهمة"></textarea>
+    <div class="grid">
+      <label>الأولوية
+        <select id="priority">
+          <option value="high">عالية</option>
+          <option value="medium" selected>متوسطة</option>
+          <option value="low">منخفضة</option>
+        </select>
+      </label>
+      <label>الفئة <select id="category"></select></label>
+      <label>موعد الانتهاء <input id="deadline" type="date"></label>
+    </div>
+    <button id="cancelEdit" class="btn ghost" type="button" hidden>إلغاء التعديل</button>
+  </form>
 
-        <section class="toolbar glass" aria-label="البحث والفلاتر">
-            <input id="search" type="search" placeholder="ابحث في المهام... ( / )" aria-label="بحث">
-            <div class="seg" id="statusSeg" role="group" aria-label="حالة المهام">
-                <button type="button" data-status="all" class="on">الكل</button>
-                <button type="button" data-status="active">غير المكتملة</button>
-                <button type="button" data-status="done">المكتملة</button>
-            </div>
-            <select id="fPriority" aria-label="فلتر الأولوية">
-                <option value="all">كل الأولويات</option>
-                <option value="high">عالية</option>
-                <option value="medium">متوسطة</option>
-                <option value="low">منخفضة</option>
-            </select>
-            <select id="fCategory" aria-label="فلتر الفئة"></select>
-            <select id="sort" aria-label="الترتيب">
-                <option value="newest">الأحدث</option>
-                <option value="oldest">الأقدم</option>
-                <option value="priority">الأولوية</option>
-                <option value="deadline">موعد التسليم</option>
-            </select>
-            <button id="catsBtn" class="btn ghost" type="button">الفئات</button>
-            <button id="clearDone" class="btn danger" type="button">حذف المكتملة</button>
-        </section>
+  <section class="toolbar glass" aria-label="البحث والفلاتر">
+    <input id="search" type="search" placeholder="ابحث في المهام... ( / )" aria-label="بحث">
+    <div class="seg" id="statusSeg" role="group" aria-label="حالة المهام">
+      <button type="button" data-status="all" class="on">الكل</button>
+      <button type="button" data-status="active">غير المكتملة</button>
+      <button type="button" data-status="done">المكتملة</button>
+    </div>
+    <select id="fPriority" aria-label="فلتر الأولوية">
+      <option value="all">كل الأولويات</option>
+      <option value="high">عالية</option>
+      <option value="medium">متوسطة</option>
+      <option value="low">منخفضة</option>
+    </select>
+    <select id="fCategory" aria-label="فلتر الفئة"></select>
+    <label class="datef">تاريخ المهام <input id="fDate" type="date" aria-label="فلتر التاريخ"></label>
+    <button id="clearDate" class="btn ghost" type="button" hidden>مسح التاريخ</button>
+    <select id="sort" aria-label="الترتيب">
+      <option value="newest">الأحدث</option>
+      <option value="oldest">الأقدم</option>
+      <option value="priority">الأولوية</option>
+      <option value="deadline">موعد التسليم</option>
+    </select>
+    <button id="catsBtn" class="btn ghost" type="button">الفئات</button>
+    <button id="clearDone" class="btn danger" type="button">حذف المكتملة</button>
+  </section>
 
-        <section id="overdueBox" class="group overdue" hidden>
-            <h2>متأخرة عن موعدها <span id="overdueCount" class="count"></span></h2>
-            <ul id="overdueList" class="list"></ul>
-        </section>
+  <section id="overdueBox" class="group overdue" hidden>
+    <h2>متأخرة عن موعدها <span id="overdueCount" class="count"></span></h2>
+    <ul id="overdueList" class="list"></ul>
+  </section>
 
-        <section class="group">
-            <h2>المهام <span id="listCount" class="count"></span></h2>
-            <ul id="list" class="list"></ul>
-            <div id="empty" class="empty glass" hidden>
-                <svg viewBox="0 0 64 64" width="72" height="72" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="12" y="8" width="40" height="48" rx="8" />
-                    <path d="M22 24h20M22 34h12M22 44h8" />
-                    <circle cx="46" cy="46" r="9" fill="var(--bg2)" />
-                    <path d="M42 46l3 3 5-6" />
-                </svg>
-                <h3 id="emptyTitle">لا توجد مهام بعد</h3>
-                <p id="emptyText" class="muted">اكتب أول مهمة في الأعلى وابدأ رحلة الإنجاز.</p>
-            </div>
-        </section>
+  <section class="group">
+    <h2>المهام <span id="listCount" class="count"></span></h2>
+    <ul id="list" class="list"></ul>
+    <div id="empty" class="empty glass" hidden>
+      <svg viewBox="0 0 64 64" width="72" height="72" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="12" y="8" width="40" height="48" rx="8"/><path d="M22 24h20M22 34h12M22 44h8"/><circle cx="46" cy="46" r="9" fill="var(--bg2)"/><path d="M42 46l3 3 5-6"/></svg>
+      <h3 id="emptyTitle">لا توجد مهام بعد</h3>
+      <p id="emptyText" class="muted">اكتب أول مهمة في الأعلى وابدأ رحلة الإنجاز.</p>
+    </div>
+  </section>
 
-        <footer class="hint muted">اختصارات: <kbd>N</kbd> مهمة جديدة · <kbd>/</kbd> بحث · <kbd>T</kbd> تبديل الوضع ·
-            <kbd>Esc</kbd> إلغاء
-        </footer>
-    </main>
+  <footer class="hint muted">اختصارات: <kbd>N</kbd> مهمة جديدة · <kbd>/</kbd> بحث · <kbd>T</kbd> تبديل الوضع · <kbd>Esc</kbd> إلغاء</footer>
+</main>
 
-    <div id="toasts" class="toasts" aria-live="polite"></div>
+<div id="toasts" class="toasts" aria-live="polite"></div>
 
-    <dialog id="confirmDlg" class="glass dlg">
-        <form method="dialog">
-            <p id="confirmMsg"></p>
-            <div class="dlg-actions">
-                <button class="btn ghost" value="no">إلغاء</button>
-                <button class="btn danger" value="yes">تأكيد الحذف</button>
-            </div>
-        </form>
-    </dialog>
+<dialog id="confirmDlg" class="glass dlg">
+  <form method="dialog">
+    <p id="confirmMsg"></p>
+    <div class="dlg-actions">
+      <button class="btn ghost" value="no">إلغاء</button>
+      <button class="btn danger" value="yes">تأكيد الحذف</button>
+    </div>
+  </form>
+</dialog>
 
-    <dialog id="catsDlg" class="glass dlg">
-        <h3>الفئات وألوانها</h3>
-        <ul id="catsList" class="cats"></ul>
-        <form id="catForm" class="row">
-            <input id="catName" type="text" maxlength="20" placeholder="اسم فئة جديدة" autocomplete="off"
-                aria-label="اسم الفئة">
-            <input id="catColor" type="color" value="#34d399" aria-label="لون الفئة">
-            <button class="btn primary" type="submit">إضافة</button>
-        </form>
-        <div class="dlg-actions"><button id="catsClose" class="btn ghost" type="button">إغلاق</button></div>
-    </dialog>
+<dialog id="catsDlg" class="glass dlg">
+  <h3>الفئات وألوانها</h3>
+  <ul id="catsList" class="cats"></ul>
+  <form id="catForm" class="row">
+    <input id="catName" type="text" maxlength="20" placeholder="اسم فئة جديدة" autocomplete="off" aria-label="اسم الفئة">
+    <input id="catColor" type="color" value="#34d399" aria-label="لون الفئة">
+    <button class="btn primary" type="submit">إضافة</button>
+  </form>
+  <div class="dlg-actions"><button id="catsClose" class="btn ghost" type="button">إغلاق</button></div>
+</dialog>
 
-    <script src="main.js"></script>
+<script src="main.js"></script>
 </body>
-
 </html>
